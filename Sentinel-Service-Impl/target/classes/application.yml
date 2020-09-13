@@ -1,0 +1,30 @@
+# MemberService
+#server:
+#  port: 8090
+#spring:
+#  application:
+#    name: MemberService
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+
+# OrderService
+spring:
+  application:
+    name: OrderService
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848  # 注册中心nacos的ip
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8080  # sentinel控制台的ip
+      eager: true
+server:
+  port: 8090  # 本服务的tomcat端口
+  tomcat:
+    max-threads: 20  # tomcat的最大线程数量
+
+# 8080 8081 8082---会员相关 8090 8091 8092 订单相关
+

@@ -1,0 +1,12 @@
+#注册中心的配置文件
+server:
+  port: 8090
+
+spring:
+  application:
+    name: MemberService #暴露的服务的名称,注册中心上面保存了MemberService服务的ip->127.0.0.1:8080
+  cloud:
+    nacos:
+      discovery:
+        ###nacos注册地址
+        server-addr: 127.0.0.1:8848

@@ -1,0 +1,23 @@
+server:
+  port: 80
+spring:
+  application: #网关的服务名，把这个注册到注册中心上面
+    name: MemberServiceGateway #注册中心上面保存了MemberServiceGateway的地址127.0.0.1:80
+  cloud:
+    gateway:
+      routes: #路由数组，可以配置多个路由
+        - id: MemberServiceGateway  #路由转发的标识，要求唯一，默认是UUID
+          uri: lb://MemberService/ #请求要被转发的地址，去注册中心找MemberService服务对应的地址127.0.0.1:8090,lb:负载均衡策略
+          order: 1  #路由的优先级，数字越小代表路由的优先级越高
+          predicates:
+            - Path=/getUser/**  #当满足path指定的规则的时候，才会转发
+      default-filters: #在请求之前去掉一层路径 localhost/getUser/getUser -->MemberService/getUser
+        - StripPrefix=1  #前面的那个getUser会被去掉，-->localhost:8090/getUser
+      discovery:
+        locator:
+          enabled: true #开启以服务名称去注册中心上获取转发地址
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 #注册中心的ip
+
+
